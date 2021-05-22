@@ -1,8 +1,12 @@
 package student.implementations;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import student.Interface.IStudent;
 import student.Models.Student;
 
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class Implemantations implements IStudent {
@@ -11,20 +15,31 @@ public class Implemantations implements IStudent {
     public SortedMap<String, Student> studentName;
     public SortedMap<String, Student> studentSurname;
     public SortedMap<String, Student> studentFatherName;
-    public Map<String, Student> email;
+    public Set<String> email;
 
-    public Implemantations() {
-        studentSortedMap = new TreeMap<>();
-        studentName = new TreeMap<>();
-        studentSurname = new TreeMap<>();
-        studentFatherName = new TreeMap<>();
-        email = new HashMap<>();
+    public Implemantations() throws IOException {
+        Properties properties = new Properties();
+        properties.load(new FileReader("app.config"));
+        Gson gson = new Gson();
+        Type type4Student = new TypeToken<SortedMap<String, Student>>() {
+        }.getType();
+        Type type4StudentEmail = new TypeToken<Set<String>>() {
+        }.getType();
+
+
+        SortedMap<String, Student> map4MainStudent =new File(properties.getProperty("app.studentMainJsonFile")).exists()?gson.fromJson(new BufferedReader(new FileReader(properties.getProperty("app.studentMainJsonFile"))), type4Student):null;
+        SortedMap<String, Student> map4StudentName =new File(properties.getProperty("app.studentNameJsonFile")).exists()? gson.fromJson(new BufferedReader(new FileReader(properties.getProperty("app.studentNameJsonFile"))), type4Student):null;
+        SortedMap<String, Student> map4StudentSurname =new File(properties.getProperty("app.studentSurnameJsonFile")).exists()? gson.fromJson(new BufferedReader(new FileReader(properties.getProperty("app.studentSurnameJsonFile"))), type4Student):null;
+        SortedMap<String, Student> map4StudentFatherName =new File(properties.getProperty("app.studentFatherNameJsonFile")).exists()? gson.fromJson(new BufferedReader(new FileReader(properties.getProperty("app.studentFatherNameJsonFile"))), type4Student):null;
+        Set<String> map4StudentEmail =new File(properties.getProperty("app.studentEmailJsonFile")).exists()? gson.fromJson(new BufferedReader(new FileReader(properties.getProperty("app.studentEmailJsonFile"))), type4StudentEmail):null;
+
+        studentSortedMap =new File(properties.getProperty("app.studentMainJsonFile")).exists()? map4MainStudent.size() != 0 ? map4MainStudent : new TreeMap<>():new TreeMap<>();
+        studentName =new File(properties.getProperty("app.studentNameJsonFile")).exists()?  map4StudentName.size() != 0 ? map4StudentName : new TreeMap<>():new TreeMap<>();
+        studentSurname =new File(properties.getProperty("app.studentSurnameJsonFile")).exists()? map4StudentSurname.size() != 0 ? map4StudentSurname : new TreeMap<>():new TreeMap<>();
+        studentFatherName =new File(properties.getProperty("app.studentFatherNameJsonFile")).exists()? map4StudentFatherName.size() != 0 ? map4StudentFatherName : new TreeMap<>():new TreeMap<>();
+        email =new File(properties.getProperty("app.studentEmailJsonFile")).exists()? map4StudentEmail.size() != 0 ? map4StudentEmail : new TreeSet<>():new TreeSet<>();
     }
 
-    @Override
-    public Student getEmail(String mail) {
-        return email.get(mail);
-    }
 
     @Override
     public void createStudent(Student student) {
@@ -32,12 +47,12 @@ public class Implemantations implements IStudent {
         studentName.put(student.name + student.id, student);
         studentSurname.put(student.surname + student.id, student);
         studentFatherName.put(student.fatherName + student.id, student);
-        email.put(student.email, student);
+        email.add(student.email);
     }
 
     @Override
     public void updateStudent(String id, String name, String surname, String fatherName, String mail, String phoneNumber) {
-        Student updatedStudent =studentSortedMap.get(id);
+        Student updatedStudent = studentSortedMap.get(id);
 
         if (updatedStudent != null) {
             studentName.remove(updatedStudent.name + updatedStudent.id);
@@ -53,7 +68,7 @@ public class Implemantations implements IStudent {
             studentName.put(name + id, updatedStudent);
             studentSurname.put(surname + id, updatedStudent);
             studentFatherName.put(fatherName + id, updatedStudent);
-            email.put(mail, updatedStudent);
+            email.add(mail);
         }
     }
 
@@ -80,6 +95,10 @@ public class Implemantations implements IStudent {
     @Override
     public SortedMap<String, Student> getStudentListByName() {
         return studentName;
+    }
+
+    public Set<String> getStudentListByEmail() {
+        return email;
     }
 
     @Override

@@ -67,22 +67,48 @@ public class Menu {
                                 addNewStudent(student);
                                 break;
                             case 2:
-                                updateStudent(student);
+                                if (student.getStudentList().size()==0){
+                                    System.out.println(ConsoleColors.RED+"\nTelebe elave olunmayib\n"+ConsoleColors.RESET);
+                                }else {
+                                    updateStudent(student);
+                                }
                                 break;
                             case 3:
-                                removeStudent(student);
+                                if (student.getStudentList().size()==0){
+                                    System.out.println(ConsoleColors.RED+"\nTelebe elave olunmayib\n"+ConsoleColors.RESET);
+                                }
+                                else {
+                                    removeStudent(student);
+                                }
                                 break;
                             case 4:
-                                getAllStudent(student);
+                                if (student.getStudentList().size()==0){
+                                    System.out.println(ConsoleColors.RED+"\nTelebe elave olunmayib\n"+ConsoleColors.RESET);
+                                }
+                                else {
+                                    getAllStudent(student);
+                                }
                                 break;
                             case 5:
-                                searchByName(student);
+                                if (student.getStudentList().size()==0){
+                                    System.out.println(ConsoleColors.RED+"\nTelebe elave olunmayib\n"+ConsoleColors.RESET);
+                                }else {
+                                    searchByName(student);
+                                }
                                 break;
                             case 6:
-                                searchBySurname(student);
+                                if (student.getStudentList().size()==0){
+                                    System.out.println(ConsoleColors.RED+"\nTelebe elave olunmayib\n"+ConsoleColors.RESET);
+                                }else {
+                                    searchBySurname(student);
+                                }
                                 break;
                             case 7:
-                                searchByFatherName(student);
+                                if (student.getStudentList().size()==0){
+                                    System.out.println(ConsoleColors.RED+"\nTelebe elave olunmayib\n"+ConsoleColors.RESET);
+                                }else {
+                                    searchByFatherName(student);
+                                }
                                 break;
                             case 0:
                                 System.out.println(ConsoleColors.RED + "\nSistemden cixdiniz" + ConsoleColors.RESET);

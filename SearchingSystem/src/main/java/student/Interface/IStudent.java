@@ -23,5 +23,4 @@ public interface IStudent {
 
     Student getStudent(String id);
 
-    Student getEmail(String email);
 }

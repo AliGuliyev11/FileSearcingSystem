@@ -3,6 +3,8 @@ package student.inputs;
 import student.baseClass.ConsoleColors;
 import student.implementations.Implemantations;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +16,7 @@ public class StringInput {
     public static String addString(String text) {
         String myString;
         do {
-            System.out.print(text);
+            System.out.print(ConsoleColors.BLUE+text+ConsoleColors.RESET);
             Scanner scanner = new Scanner(System.in);
             myString = scanner.nextLine();
 
@@ -22,7 +24,7 @@ public class StringInput {
         return myString;
     }
 
-    public static String emailValidation() {
+    public static String emailValidation() throws IOException {
         Implemantations implemantations=new Implemantations();
         String myString;
         do {
@@ -31,13 +33,13 @@ public class StringInput {
             myString = scanner.nextLine();
 
             if (!isValid(myString, EMAIL_REGEX)) {
-                System.out.println("Emailinizi dogru sekilde daxil edin.");
+                System.out.println(ConsoleColors.RED+"Emailinizi dogru sekilde daxil edin."+ConsoleColors.RESET);
             }
-            if (implemantations.getEmail(myString)!=null){
-                System.out.println("Bu adda email artiq var");
+            if (implemantations.getStudentListByEmail().contains(myString)){
+                System.out.println(ConsoleColors.RED+"Bu adda email artiq var"+ConsoleColors.RESET);
             }
 
-        } while (!isValid(myString, EMAIL_REGEX) || implemantations.getEmail(myString)!=null);
+        } while (!isValid(myString, EMAIL_REGEX) || implemantations.getStudentListByEmail().contains(myString));
         return myString;
     }
 

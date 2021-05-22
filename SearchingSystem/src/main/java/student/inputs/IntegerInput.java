@@ -17,10 +17,10 @@ public class IntegerInput {
             try {
                 studentID = scanner.nextLine();
                 if (!existStudent(studentID, student)) {
-                    System.out.println("Telebenin id-ni dogru sekilde daxil edin.");
+                    System.out.println(ConsoleColors.RED+"Telebenin id-ni dogru sekilde daxil edin."+ConsoleColors.RESET);
                 }
             } catch (Exception e) {
-                System.out.println("Numeric tipde input daxi edin");
+                System.out.println(ConsoleColors.RED+"Numeric tipde input daxi edin"+ConsoleColors.RESET);
             }
 
 
