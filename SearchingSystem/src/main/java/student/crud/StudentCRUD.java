@@ -17,11 +17,11 @@ import static student.inputs.StringInput.*;
 
 public class StudentCRUD {
     public static void addNewStudent(Implemantations student) throws IOException {
-        String studentName = addString("Telebenin adini daxil edin:");
-        String studentSurname = addString("Telebenin surname daxil edin:");
-        String fatherName = addString("Telebenin ata adini daxil edin");
+        String studentName = addString("Telebenin adini daxil edin:",false);
+        String studentSurname = addString("Telebenin surname daxil edin:",false);
+        String fatherName = addString("Telebenin ata adini daxil edin",false);
         String email = emailValidation();
-        String number = addString("Telebenin mobil nomresini daxil edin");
+        String number = addString("Telebenin mobil nomresini daxil edin",true);
         Student addedStudent = new Student(studentName, studentSurname, fatherName, email, number);
         student.createStudent(addedStudent);
 
@@ -102,7 +102,16 @@ public class StudentCRUD {
 
         System.out.println(ConsoleColors.PURPLE_BRIGHT + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Butun telebelerin siyahisi~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + ConsoleColors.RESET);
         for (var item : map.values()) {
-            System.out.println("Telebenin adi:" + ConsoleColors.RED_UNDERLINED + item.name + ConsoleColors.RESET + "-soyadi:" + ConsoleColors.RED_UNDERLINED + item.surname + ConsoleColors.RESET + "-ata adi:" + ConsoleColors.RED_UNDERLINED + item.fatherName + ConsoleColors.RESET + "-emaili:" + ConsoleColors.RED_UNDERLINED + item.email + ConsoleColors.RESET + "-nomresi:" + ConsoleColors.RED_UNDERLINED + item.phoneNumber + ConsoleColors.RESET);
+            System.out.println("Telebenin adi:" + ConsoleColors.RED_UNDERLINED
+                    + item.name + ConsoleColors.RESET + "-soyadi:"
+                    + ConsoleColors.RED_UNDERLINED + item.surname
+                    + ConsoleColors.RESET + "-ata adi:"
+                    + ConsoleColors.RED_UNDERLINED + item.fatherName
+                    + ConsoleColors.RESET + "-emaili:"
+                    + ConsoleColors.RED_UNDERLINED + item.email
+                    + ConsoleColors.RESET + "-nomresi:"
+                    + ConsoleColors.RED_UNDERLINED
+                    + item.phoneNumber + ConsoleColors.RESET);
         }
         System.out.println(ConsoleColors.PURPLE_BRIGHT + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + ConsoleColors.RESET);
 
@@ -124,7 +133,7 @@ public class StudentCRUD {
                 studentName = updatedStudent.name;
                 break;
             default:
-                studentName = addString("Telebenin adini daxil edin:");
+                studentName = addString("Telebenin adini daxil edin:",false);
                 break;
         }
         String studentSurname;
@@ -139,7 +148,7 @@ public class StudentCRUD {
                 studentSurname = updatedStudent.surname;
                 break;
             default:
-                studentSurname = addString("Telebenin soyadini daxil edin:");
+                studentSurname = addString("Telebenin soyadini daxil edin:",false);
                 break;
         }
         String fatherName;
@@ -154,7 +163,7 @@ public class StudentCRUD {
                 fatherName = updatedStudent.fatherName;
                 break;
             default:
-                fatherName = addString("Telebenin ata adini daxil edin:");
+                fatherName = addString("Telebenin ata adini daxil edin:",false);
                 break;
         }
         String email;
@@ -185,7 +194,7 @@ public class StudentCRUD {
                 number = updatedStudent.phoneNumber;
                 break;
             default:
-                number= addString("Telebenin mobil nomresini daxil edin");
+                number= addString("Telebenin mobil nomresini daxil edin",true);
                 break;
         }
         student.updateStudent(studentID, studentName, studentSurname, fatherName, email, number);
@@ -199,7 +208,7 @@ public class StudentCRUD {
     public static void searchByName(Implemantations student) throws IOException {
         Properties properties = new Properties();
         properties.load(new FileReader("app.config"));
-        String studentName = addString("Telebenin adinina gore axtaris ucun input daxil edin:");
+        String studentName = addString("Telebenin adinina gore axtaris ucun input daxil edin:",false);
         Gson gson = new Gson();
         Type type = new TypeToken<SortedMap<String, Student>>() {
         }.getType();
@@ -228,7 +237,7 @@ public class StudentCRUD {
     public static void searchBySurname(Implemantations student) throws IOException {
         Properties properties = new Properties();
         properties.load(new FileReader("app.config"));
-        String studentSurname = addString("Telebenin soyadina gore axtaris ucun input daxil edin:");
+        String studentSurname = addString("Telebenin soyadina gore axtaris ucun input daxil edin:",false);
         Gson gson = new Gson();
         Type type = new TypeToken<SortedMap<String, Student>>() {
         }.getType();
@@ -257,7 +266,7 @@ public class StudentCRUD {
     public static void searchByFatherName(Implemantations student) throws IOException {
         Properties properties = new Properties();
         properties.load(new FileReader("app.config"));
-        String studentFatherName = addString("Telebenin ata adina gore axtaris ucun input daxil edin:");
+        String studentFatherName = addString("Telebenin ata adina gore axtaris ucun input daxil edin:",false);
         Gson gson = new Gson();
         Type type = new TypeToken<SortedMap<String, Student>>() {
         }.getType();
