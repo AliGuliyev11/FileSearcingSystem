@@ -17,11 +17,11 @@ import static student.inputs.StringInput.*;
 
 public class StudentCRUD {
     public static void addNewStudent(Implemantations student) throws IOException {
-        String studentName = addString("Telebenin adini daxil edin:",false);
-        String studentSurname = addString("Telebenin surname daxil edin:",false);
-        String fatherName = addString("Telebenin ata adini daxil edin",false);
+        String studentName = addString("Telebenin adini daxil edin:", false);
+        String studentSurname = addString("Telebenin surname daxil edin:", false);
+        String fatherName = addString("Telebenin ata adini daxil edin", false);
         String email = emailValidation();
-        String number = addString("Telebenin mobil nomresini daxil edin",true);
+        String number = addString("Telebenin mobil nomresini daxil edin", true);
         Student addedStudent = new Student(studentName, studentSurname, fatherName, email, number);
         student.createStudent(addedStudent);
 
@@ -41,6 +41,7 @@ public class StudentCRUD {
         bufferedWriter.write(new GsonBuilder().setPrettyPrinting().create().toJson(map));
         bufferedWriter.close();
     }
+
     public static void addToJsonEmail(Set<String> studentSortedMap) throws IOException {
         Properties properties = new Properties();
         properties.load(new FileReader("app.config"));
@@ -53,7 +54,6 @@ public class StudentCRUD {
     public static void addToJson(SortedMap<String, Student> studentSortedMap) throws IOException {
         Properties properties = new Properties();
         properties.load(new FileReader("app.config"));
-//        SortedMap<String, Student> map = Collections.synchronizedSortedMap(studentSortedMap);
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(properties.getProperty("app.studentMainJsonFile")));
         new Gson().toJson(studentSortedMap);
         bufferedWriter.write(new GsonBuilder().setPrettyPrinting().create().toJson(studentSortedMap));
@@ -90,15 +90,11 @@ public class StudentCRUD {
         addToJsonName(student.getStudentListByName());
         addToJsonSurname(student.getStudentListBSurname());
         addToJsonFatherName(student.getStudentListByFatherName());
+        addToJsonEmail(student.getStudentListByEmail());
     }
 
     public static void getAllStudent(Implemantations student) throws IOException {
-        Properties properties = new Properties();
-        properties.load(new FileReader("app.config"));
-        Gson gson = new Gson();
-        Type type = new TypeToken<HashMap<String, Student>>() {
-        }.getType();
-        HashMap<String, Student> map = gson.fromJson(new BufferedReader(new FileReader(properties.getProperty("app.studentMainJsonFile"))), type);
+        SortedMap<String, Student> map = student.getStudentList();
 
         System.out.println(ConsoleColors.PURPLE_BRIGHT + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Butun telebelerin siyahisi~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + ConsoleColors.RESET);
         for (var item : map.values()) {
@@ -127,13 +123,12 @@ public class StudentCRUD {
             Scanner scanner = new Scanner(System.in);
             yesOrNot = scanner.nextLine();
         } while (!yesOrNot.toLowerCase().contentEquals("y") && !yesOrNot.toLowerCase().contentEquals("n"));
-
         switch (yesOrNot.toLowerCase()) {
             case "n":
                 studentName = updatedStudent.name;
                 break;
             default:
-                studentName = addString("Telebenin adini daxil edin:",false);
+                studentName = addString("Telebenin adini daxil edin:", false);
                 break;
         }
         String studentSurname;
@@ -148,7 +143,7 @@ public class StudentCRUD {
                 studentSurname = updatedStudent.surname;
                 break;
             default:
-                studentSurname = addString("Telebenin soyadini daxil edin:",false);
+                studentSurname = addString("Telebenin soyadini daxil edin:", false);
                 break;
         }
         String fatherName;
@@ -163,7 +158,7 @@ public class StudentCRUD {
                 fatherName = updatedStudent.fatherName;
                 break;
             default:
-                fatherName = addString("Telebenin ata adini daxil edin:",false);
+                fatherName = addString("Telebenin ata adini daxil edin:", false);
                 break;
         }
         String email;
@@ -194,7 +189,7 @@ public class StudentCRUD {
                 number = updatedStudent.phoneNumber;
                 break;
             default:
-                number= addString("Telebenin mobil nomresini daxil edin",true);
+                number = addString("Telebenin mobil nomresini daxil edin", true);
                 break;
         }
         student.updateStudent(studentID, studentName, studentSurname, fatherName, email, number);
@@ -203,91 +198,40 @@ public class StudentCRUD {
         addToJsonName(student.getStudentListByName());
         addToJsonSurname(student.getStudentListBSurname());
         addToJsonFatherName(student.getStudentListByFatherName());
+        addToJsonEmail(student.getStudentListByEmail());
     }
 
     public static void searchByName(Implemantations student) throws IOException {
-        Properties properties = new Properties();
-        properties.load(new FileReader("app.config"));
-        String studentName = addString("Telebenin adinina gore axtaris ucun input daxil edin:",false);
-        Gson gson = new Gson();
-        Type type = new TypeToken<SortedMap<String, Student>>() {
-        }.getType();
-        SortedMap<String, Student> sortedMap = gson.fromJson(new BufferedReader(new FileReader(properties.getProperty("app.studentNameJsonFile"))), type);
+        String studentName = addString("Telebenin adinina gore axtaris ucun input daxil edin:", false);
+        SortedMap<String, Student> sortedMap = student.getStudentListByName();
         String key = sortedMap.keySet().stream().filter(a -> a.toUpperCase().startsWith(studentName.toUpperCase())).findFirst().orElse(null);
-        String lastKey;
         if (key == null) {
             System.out.println(ConsoleColors.RED + "\nAxtaris neticesi tapilmadi\n" + ConsoleColors.RESET);
             return;
-        } else if (sortedMap.tailMap(key).values().size() != 1) {
-            lastKey = key != null ? sortedMap.tailMap(key).values().stream().filter(a -> !a.name.toUpperCase().startsWith(studentName.toUpperCase())).findFirst().orElse(null).name : null;
-        } else {
-            showSearchResult(sortedMap.tailMap(key).values());
-            return;
         }
-
-        if (sortedMap.size() == 0 || key == null || lastKey == null) {
-            System.out.println(ConsoleColors.RED + "\nAxtaris neticesi tapilmadi\n" + ConsoleColors.RESET);
-        } else if (sortedMap.tailMap(key).values().size() == 1) {
-            showSearchResult(sortedMap.tailMap(key).values());
-        } else {
-            showSearchResult(sortedMap.subMap(key, lastKey).values().stream().collect(Collectors.toList()));
-        }
+        showSearchResult(sortedMap.tailMap(key).values().stream().filter(a->a.name.startsWith(studentName)).collect(Collectors.toList()));
     }
 
     public static void searchBySurname(Implemantations student) throws IOException {
-        Properties properties = new Properties();
-        properties.load(new FileReader("app.config"));
-        String studentSurname = addString("Telebenin soyadina gore axtaris ucun input daxil edin:",false);
-        Gson gson = new Gson();
-        Type type = new TypeToken<SortedMap<String, Student>>() {
-        }.getType();
-        SortedMap<String, Student> sortedMap = gson.fromJson(new BufferedReader(new FileReader(properties.getProperty("app.studentSurnameJsonFile"))), type);
+        String studentSurname = addString("Telebenin soyadina gore axtaris ucun input daxil edin:", false);
+        SortedMap<String, Student> sortedMap = student.getStudentListBSurname();
         String key = sortedMap.keySet().stream().filter(a -> a.toUpperCase().startsWith(studentSurname.toUpperCase())).findFirst().orElse(null);
-        String lastKey;
-
         if (key == null) {
             System.out.println(ConsoleColors.RED + "\nAxtaris neticesi tapilmadi\n" + ConsoleColors.RESET);
             return;
-        } else if (sortedMap.tailMap(key).values().size() != 1) {
-            lastKey = key != null ? sortedMap.tailMap(key).values().stream().filter(a -> !a.surname.toUpperCase().startsWith(studentSurname.toUpperCase())).findFirst().orElse(null).surname : null;
-        } else {
-            showSearchResult(sortedMap.tailMap(key).values());
-            return;
         }
-
-
-        if (sortedMap.size() == 0 || key == null || lastKey == null) {
-            System.out.println(ConsoleColors.RED + "\nAxtaris neticesi tapilmadi\n" + ConsoleColors.RESET);
-        } else {
-            showSearchResult(sortedMap.subMap(key, lastKey).values().stream().collect(Collectors.toList()));
-        }
+        showSearchResult(sortedMap.tailMap(key).values().stream().filter(a->a.surname.startsWith(studentSurname)).collect(Collectors.toList()));
     }
 
     public static void searchByFatherName(Implemantations student) throws IOException {
-        Properties properties = new Properties();
-        properties.load(new FileReader("app.config"));
-        String studentFatherName = addString("Telebenin ata adina gore axtaris ucun input daxil edin:",false);
-        Gson gson = new Gson();
-        Type type = new TypeToken<SortedMap<String, Student>>() {
-        }.getType();
-        SortedMap<String, Student> sortedMap = gson.fromJson(new BufferedReader(new FileReader(properties.getProperty("app.studentFatherNameJsonFile"))), type);
+        String studentFatherName = addString("Telebenin ata adina gore axtaris ucun input daxil edin:", false);
+        SortedMap<String, Student> sortedMap = student.getStudentListByFatherName();
         String key = sortedMap.keySet().stream().filter(a -> a.toUpperCase().startsWith(studentFatherName.toUpperCase())).findFirst().orElse(null);
-        String lastKey;
         if (key == null) {
             System.out.println(ConsoleColors.RED + "\nAxtaris neticesi tapilmadi\n" + ConsoleColors.RESET);
             return;
-        } else if (sortedMap.tailMap(key).values().size() != 1) {
-            lastKey = key != null ? sortedMap.tailMap(key).values().stream().filter(a -> !a.fatherName.toUpperCase().startsWith(studentFatherName.toUpperCase())).findFirst().orElse(null).fatherName : null;
-        } else {
-            showSearchResult(sortedMap.tailMap(key).values());
-            return;
         }
-
-        if (sortedMap.size() == 0 || key == null || lastKey == null) {
-            System.out.println(ConsoleColors.RED + "\nAxtaris neticesi tapilmadi\n" + ConsoleColors.RESET);
-        } else {
-            showSearchResult(sortedMap.subMap(key, lastKey).values().stream().collect(Collectors.toList()));
-        }
+        showSearchResult(sortedMap.tailMap(key).values().stream().filter(a->a.fatherName.startsWith(studentFatherName)).collect(Collectors.toList()));
 
     }
 
