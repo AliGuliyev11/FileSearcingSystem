@@ -1,0 +1,123 @@
+{
+  "Ali1": {
+    "id": 1,
+    "name": "Ali",
+    "surname": "Guliyev",
+    "fatherName": "Ulvi",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Amrah2": {
+    "id": 2,
+    "name": "Amrah",
+    "surname": "Ahmadov",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Asadullah3": {
+    "id": 3,
+    "name": "Asadullah",
+    "surname": "Jamalov",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Elgun4": {
+    "id": 4,
+    "name": "Elgun",
+    "surname": "Maqsudzade",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Emil5": {
+    "id": 5,
+    "name": "Emil",
+    "surname": "Ahmadli",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Iqbal6": {
+    "id": 6,
+    "name": "Iqbal",
+    "surname": "Hasanli",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Kamal7": {
+    "id": 7,
+    "name": "Kamal",
+    "surname": "Taghiyev",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Mubariz8": {
+    "id": 8,
+    "name": "Mubariz",
+    "surname": "Mammadzada",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Nurlan9": {
+    "id": 9,
+    "name": "Nurlan",
+    "surname": "Memmedov",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Parvin10": {
+    "id": 10,
+    "name": "Parvin",
+    "surname": "Yagubzada",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Saleh11": {
+    "id": 11,
+    "name": "Saleh",
+    "surname": "Mirzaliyev",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Seynur12": {
+    "id": 12,
+    "name": "Seynur",
+    "surname": "Mammadov",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Shafig13": {
+    "id": 13,
+    "name": "Shafig",
+    "surname": "Tahmasib",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Valeh14": {
+    "id": 14,
+    "name": "Valeh",
+    "surname": "Abdullayev",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  },
+  "Vusal15": {
+    "id": 15,
+    "name": "Vusal",
+    "surname": "Abdullayev",
+    "fatherName": "rgrth",
+    "email": "a@gmail.com",
+    "phoneNumber": "56575"
+  }
+
+}
